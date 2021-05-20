@@ -1,0 +1,84 @@
+<!-- 收货地址容器 -->
+<view class="revice_address_row">
+  <!-- 当收货地址不存在的时候  按钮显示 -->
+  <view class="address_btn" wx:if="{{!address.userName}}">
+    <button bindtap="handleChooseAddress" type="primary" plain>添加收货地址</button>
+  </view>
+  <!-- 当收货地址存在  则显示地址 -->
+  <view wx:else class="user_info_row">
+      <view class="user_info">
+        <view>{{address.userName}}</view>
+        <view>{{address.all}}</view>
+      </view>
+      <view class="user_phone">{{address.telNumber}}</view>
+  </view>
+</view>
+
+
+<!-- 购物车内容 -->
+<view class="cart_content">
+  <view class="cart_title">购物车</view>
+  <view class="cart_main">
+    <!-- 当cart长度不为0  显示信息  否则显示提示信息 -->
+   <block wx:if="{{cart.length !== 0}}"> <view class="cart_item"
+    wx:for="{{cart}}"
+    wx:key="goods_id">
+      <!-- 复选框 -->
+      <view class="cart_chk_wrap">
+        <checkbox-group data-id="{{item.goods_id}}" bindchange="handleItemChange">
+          <checkbox checked="{{item.checked}}"> </checkbox>
+        </checkbox-group>
+      </view>
+      <!-- 商品图片 -->
+      <navigator class="cart_img_wrap">
+        <image mode="widthFix" src="{{item.goods_small_logo}}"></image>
+      </navigator>
+      <!-- 商品信息 -->
+      <view class="cart_info_wrap">
+        <view class="goods_name">{{item.goods_name}}</view>
+        <view class="goods_price_wrap">
+          <view class="goods_price">￥{{item.goods_price}}</view>
+          <view class="cart_num_tool">
+            <view class="num_edit" 
+            bindtap="handleItemEdit"
+             data-id="{{item.goods_id}}"
+             data-operation="{{-1}}">-</view>
+            <view class="goods_num">{{item.num}}</view>
+            <view class="num_edit" 
+            bindtap="handleItemEdit"
+             data-id="{{item.goods_id}}"
+             data-operation="{{1}}">+</view>
+          </view>
+        </view>
+      </view>
+    </view></block>
+   <block wx:else>
+     <image mode="widthFix" src="https://gimg2.baidu.com/image_search/src=http%3A%2F%2F5b0988e595225.cdn.sohucs.com%2Fimages%2F20190906%2F6644c676629c4203a227f9ff4273923e.gif&refer=http%3A%2F%2F5b0988e595225.cdn.sohucs.com&app=2002&size=f9999,10000&q=a80&n=0&g=0n&fmt=jpeg?sec=1623637711&t=310aa6e57f98d556a1676c15d7c1f403"></image>
+   </block>
+  </view>
+</view>
+
+<!-- 底部工具栏 -->
+
+<view class="footer_tool">
+  <!-- 全选 -->
+  <view class="all_chk_wrap">
+    <checkbox-group bindchange="handleItemAllChecked">
+        <checkbox checked="{{allChecked}}">全选</checkbox> 
+    </checkbox-group>
+  </view>
+  <!-- 总价格 -->
+  <view class="total_price_wrap">
+    <view class="total_price">
+      合计:<text class="total_price_text">￥{{totalPrice}}</text>
+    </view>
+    <view>包含运费</view>
+  </view>
+  <!-- 结算 -->
+  <view bindtap="handlePay" class="order_pay_wrap">
+    结算{{totalNum}}
+  </view>
+</view>
+  
+
+
